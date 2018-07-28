@@ -1,50 +1,26 @@
+# -*- coding: utf-8 -*-
+import urllib.request
+import urllib
 from bs4 import BeautifulSoup
 
-import requests
-import csv
-import bs4
+res = urllib.request.urlopen("http://s.weibo.com/top/summary?Refer=top_hot&topnav=1&wvr=6")
+soup = BeautifulSoup(res,"html.parser")
+hot_div = soup.find(attrs={"class":"S_plwrap"})
+#hot_a = hot_div.findAll(attrs={"target":"_blank"})
+for hot in hot_div:
+    print(hot.string)
 
-# 检查url地址
-def check_link(url):
-    try:
+'''
+#参考代码
+# -*- coding: utf-8 -*-
+import urllib.request
+import urllib
+from bs4 import BeautifulSoup
 
-        r = requests.get(url)
-        r.raise_for_status()
-        r.encoding = r.apparent_encoding
-        return r.text
-    except:
-        print('无法链接服务器！！！')
-
-    # 爬取资源
-
-
-def get_contents(ulist, rurl):
-    soup = BeautifulSoup(rurl, 'lxml')
-    trs = soup.find_all('tr')
-    for tr in trs:
-        ui = []
-        for td in tr:
-            ui.append(td.string)
-        ulist.append(ui)
-
-    # 保存资源
-
-
-def save_contents(urlist):
-    try:
-        with open("数据.csv", 'w') as f:
-            writer = csv.writer(f)
-            writer.writerow(['2016年中国企业500强排行榜'])
-            for i in range(len(urlist)):
-                writer.writerow([urlist[i][1], urlist[i][3], urlist[i][5]])
-    except:
-        pass
-
-
-def main():
-    urli = "D:\PycharmProjects"
-    url = "http://www.maigoo.com/news/463071.html"
-    rs = check_link(url)
-    get_contents(urli, rs)
-    save_contents(urli)
-
+res = urllib.request.urlopen("http://www.douban.com/tag/%E5%B0%8F%E8%AF%B4/?focus=book")
+soup = BeautifulSoup(res,"html.parser")
+book_div = soup.find(attrs={"id":"book"})
+book_a = book_div.findAll(attrs={"class":"title"})
+for book in book_a:
+    print(book.string)
+    '''
