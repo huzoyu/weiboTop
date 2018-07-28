@@ -1,16 +1,29 @@
 # -*- coding: utf-8 -*-
 import urllib.request
+import urllib.urlretrieve
 import urllib
+import re
+import time
+
+from selenium import webdriver
 from bs4 import BeautifulSoup
 
-res = urllib.request.urlopen("http://s.weibo.com/top/summary?Refer=top_hot&topnav=1&wvr=6")
-soup = BeautifulSoup(res,"html.parser")
-hot_div = soup.find(attrs={"class":"S_plwrap"})
+page = urllib.request.urlopen("http://www.maigoo.com/news/463071.html")
+html = page.read().decode("utf-8")
+print(html)
+
+
+'''
+soup = BeautifulSoup(html)
+print(soup.prettify())
+
+soup = BeautifulSoup(page,"html.parser")
+hot_div = soup.find(attrs={"class":"S_wrap "})
 #hot_a = hot_div.findAll(attrs={"target":"_blank"})
 for hot in hot_div:
     print(hot.string)
 
-'''
+
 #参考代码
 # -*- coding: utf-8 -*-
 import urllib.request
