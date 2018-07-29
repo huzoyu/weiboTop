@@ -1,11 +1,12 @@
+import time
+
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+import selenium.webdriver.chrome.service as service
 
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
-
-chrome_options.binary_location = r'C:\Users\hldh214\AppData\Local\Google\Chrome\Application\chrome.exe'
-# chrome_options.binary_location = '/opt/google/chrome/chrome'
-
-opener = webdriver.Chrome(chrome_options=chrome_options)
+service = service.Service('/path/to/chromedriver')
+service.start()
+capabilities = {'chrome.binary': '/path/to/custom/chrome'}
+driver = webdriver.Remote(service.service_url, capabilities)
+driver.get('http://www.google.com/xhtml');
+time.sleep(5) # Let the user actually see something!
+driver.quit()
